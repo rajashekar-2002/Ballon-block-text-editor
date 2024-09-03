@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Editor</title>
+    <link rel="stylesheet" href="readstyle.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .card-header {
+            cursor: pointer;
+        }
+
+        .card-header .btn-link {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="outer-read-grid">
+
+        <div id="left-read-section">
+
+            <div id="accordion1">
+                <div class="card">
+                    <div class="card-header p-0" id="headingOne1">
+                        <h5 class="mb-0">
+                            <button class="btn" data-toggle="collapse" data-target="#collapseOne1" aria-expanded="true"
+                                aria-controls="collapseOne1">
+                                Sections
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div id="collapseOne1" class="collapse show" aria-labelledby="headingOne1" data-parent="#accordion1">
+                        <div class="card-body">
+                            <div id="structure-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="accordion2">
+                <div class="card">
+                    <div class="card-header p-0" id="headingOne2">
+                        <h5 class="mb-0">
+                            <button class="btn collapsed" data-toggle="collapse" data-target="#collapseOne2"
+                                aria-expanded="false" aria-controls="collapseOne2">
+                                Collapsible Group Item #2
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div id="collapseOne2" class="collapse" aria-labelledby="headingOne2" data-parent="#accordion2">
+                        <div class="card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="accordion3">
+                <div class="card">
+                    <div class="card-header p-0" id="headingOne3">
+                        <h5 class="mb-0">
+                            <button class="btn collapsed" data-toggle="collapse" data-target="#collapseOne3"
+                                aria-expanded="false" aria-controls="collapseOne3">
+                                Collapsible Group Item #3
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div id="collapseOne3" class="collapse" aria-labelledby="headingOne3" data-parent="#accordion3">
+                        <div class="card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="ReadheadingAndEditor"></div>
+
+        <div id="right-read-section"></div>
+
+    </div>
+
+    <script type="module" src="./read.js"></script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

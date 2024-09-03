@@ -81,14 +81,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log(`Checkbox with ID ${targetCheckbox.id} is open.`);
                     targetCheckbox.checked = true;
             } 
+            hideToolbox();
     };
 
     // Hide toolbox when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('#para-toolbox')) {
-            hideToolbox();
-        }
-    });
+    // document.addEventListener('click', (e) => {
+    //     if (!e.target.closest('#para-toolbox')) {
+    //         hideToolbox();
+    //     }
+    // });
 
 
     // validateStructure();
@@ -584,6 +585,258 @@ function addButtonListeners() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// export function buildStructure() {
+//     const targetCheckbox = document.getElementById("structure-collapse");
+//     const structureContainer = document.getElementById('structure-container');
+//     let sectionCount = document.getElementById("sectionCount");
+//     structureContainer.innerHTML = ''; // Clear previous structure
+
+//     const sections = document.querySelectorAll('.para-container');
+
+//     let currentSection = null;
+//     let currentSubsection = null;
+//     let position = 1; // Start position counter
+
+//     sections.forEach((section, index) => {
+//         const paragraph = section.querySelector('p');
+//         let textContent = paragraph.textContent;
+
+//         if (textContent.length > 20) {
+//             textContent = textContent.slice(0, 80) + '...';
+//         }
+
+//         // Create a button for the text content
+//         const button = document.createElement('button');
+//         button.textContent = textContent;
+//         button.value = position; // Set the value attribute to the current position
+//         button.style.all = 'unset'; // Remove all default button styling
+//         button.style.cursor = 'pointer'; // Set cursor to pointer
+
+//         // Add single click event listener to the button
+//         button.addEventListener('click', () => {
+//             const pos = parseInt(button.value, 10); // Get position from button
+//             findParagraphByPositionForSections(pos); // Find and log the paragraph
+//         });
+
+//         // Add double-click event listener to the button for toggling content visibility
+//         button.addEventListener('dblclick', () => {
+//             toggleVisibility(button.parentElement.nextElementSibling); // Toggle visibility of the content
+//         });
+
+//         if (paragraph.classList.contains('section-branch')) {
+//             currentSection = document.createElement('li');
+//             currentSection.classList.add('section');
+//             const sectionContent = document.createElement('div');
+//             sectionContent.classList.add('section-content');
+//             sectionContent.appendChild(button); // Append the button to the section content
+
+//             const sectionList = document.createElement('ul');
+//             sectionList.classList.add('section-list');
+//             currentSection.appendChild(sectionContent);
+//             currentSection.appendChild(sectionList);
+//             structureContainer.appendChild(currentSection);
+
+//             currentSubsection = null; // Reset currentSubsection
+
+//             // Calculate the count of subsections and sub-subsections
+//             const subsectionCount = calculateTotalSubsections(index + 1);
+//             const subSubsectionCount = calculateTotalSubSubsections(index + 1);
+
+//             // Create badges for subsection and sub-subsection counts
+//             const badges = document.createDocumentFragment();
+
+//             if (subsectionCount > 0) {
+//                 const subsectionBadge = document.createElement('span');
+//                 subsectionBadge.classList.add('badge', 'badge-secondary');
+//                 subsectionBadge.textContent = `${subsectionCount}`;
+//                 badges.appendChild(subsectionBadge);
+//                 badges.appendChild(document.createTextNode(' ')); // Add a space
+//             }
+
+//             // if (subSubsectionCount > 0) {
+//             //     const subSubsectionBadge = document.createElement('span');
+//             //     subSubsectionBadge.classList.add('badge', 'badge-secondary');
+//             //     subSubsectionBadge.textContent = `sss: ${subSubsectionCount}`;
+//             //     badges.appendChild(subSubsectionBadge);
+//             // }
+
+//             // Append badges to the button
+//             button.appendChild(document.createTextNode(' ')); // Add a space between text and badges
+//             button.appendChild(badges);
+
+//             position++;
+//         } else if (paragraph.classList.contains('subsection-branch')) {
+//             if (currentSection) {
+//                 currentSubsection = document.createElement('li');
+//                 currentSubsection.classList.add('subsection');
+//                 const subsectionContent = document.createElement('div');
+//                 subsectionContent.classList.add('subsection-content');
+//                 subsectionContent.appendChild(button); // Append the button to the subsection content
+
+//                 const subsectionList = document.createElement('ul');
+//                 subsectionList.classList.add('subsection-list');
+//                 currentSubsection.appendChild(subsectionContent);
+//                 currentSubsection.appendChild(subsectionList);
+//                 currentSection.querySelector('.section-list').appendChild(currentSubsection);
+
+//                 currentSubsection.classList.add('has-children');
+
+//                 // Calculate the count of sub-subsections for this subsection
+//                 const subSubsectionCount = calculateTotalSubSubsections(index + 1);
+
+//                 // Create a badge for the sub-subsection count
+//                 if (subSubsectionCount > 0) {
+//                     const subSubsectionBadge = document.createElement('span');
+//                     subSubsectionBadge.classList.add('badge', 'badge-secondary');
+//                     subSubsectionBadge.textContent = `${subSubsectionCount}`;
+//                     button.appendChild(document.createTextNode(' ')); // Add a space between text and badge
+//                     button.appendChild(subSubsectionBadge);
+//                 }
+
+//                 position++;
+//             }
+//         } else if (paragraph.classList.contains('sub-subsection-branch')) {
+//             if (currentSubsection) {
+//                 const subSubsection = document.createElement('li');
+//                 subSubsection.classList.add('sub-subsection');
+//                 const subSubsectionContent = document.createElement('div');
+//                 subSubsectionContent.classList.add('sub-subsection-content');
+//                 subSubsectionContent.appendChild(button); // Append the button to the sub-subsection content
+//                 subSubsection.appendChild(subSubsectionContent);
+//                 currentSubsection.querySelector('.subsection-list').appendChild(subSubsection);
+//                 position++;
+//             }
+//         }
+
+//         // Get the counts of each class
+//         const sectionCountValue = document.querySelectorAll('p.section-branch').length;
+//         const subsectionCountValue = document.querySelectorAll('p.subsection-branch').length;
+//         const subSubsectionCountValue = document.querySelectorAll('p.sub-subsection-branch').length;
+
+//         // Construct the display string with conditional checks and ternary operators
+//         const sectionCountText =
+//             (sectionCountValue > 0 ? `s : ${sectionCountValue} ` : '') +
+//             (subsectionCountValue > 0 ? ` | ss : ${subsectionCountValue} ` : '') +
+//             (subSubsectionCountValue > 0 ? ` | sss : ${subSubsectionCountValue}` : '');
+
+//         // Set the textContent of sectionCount element
+//         sectionCount.textContent = sectionCountText.trim() ? ` | ${sectionCountText}` : '';
+//     });
+
+//     // Determine if the checkbox is checked or not
+//     if (!targetCheckbox.checked && structureContainer.querySelector('button')) {
+//         console.log(`Checkbox with ID ${targetCheckbox.id} is open.`);
+//         targetCheckbox.checked = true;
+//     } else {
+//         targetCheckbox.checked = false;
+//     }
+// }
+
+
+// function toggleVisibility(element) {
+//     if (element.style.display === 'none' || element.style.display === '') {
+//         element.style.display = 'block';
+//     } else {
+//         element.style.display = 'none';
+//     }
+// }
+
+// function calculateTotalSubsections(start) {
+//     const paragraphs = document.querySelectorAll('.para-container p');
+//     let subsectionCount = 0;
+
+//     for (let i = start; i < paragraphs.length; i++) {
+//         const paragraph = paragraphs[i];
+
+//         if (paragraph.classList.contains('section-branch') ) {
+//             break; // Stop counting if a section-branch or sub-subsection-branch is found
+//         }
+
+//         if (paragraph.classList.contains('subsection-branch')) {
+//             subsectionCount++; // Increment the count for each subsection-branch
+//         }
+//     }
+
+//     return subsectionCount;
+// }
+
+// function calculateTotalSubSubsections(start) {
+//     const paragraphs = document.querySelectorAll('.para-container p');
+//     let subSubsectionCount = 0;
+
+//     for (let i = start; i < paragraphs.length; i++) {
+//         const paragraph = paragraphs[i];
+
+//         if (paragraph.classList.contains('section-branch') || paragraph.classList.contains('subsection-branch')) {
+//             break; // Stop counting if a section-branch or subsection-branch is found
+//         }
+
+//         if (paragraph.classList.contains('sub-subsection-branch')) {
+//             subSubsectionCount++; // Increment the count for each sub-subsection-branch
+//         }
+//     }
+
+//     return subSubsectionCount;
+// }
+
+
+
+
+
 export function buildStructure() {
     const targetCheckbox = document.getElementById("structure-collapse");
     const structureContainer = document.getElementById('structure-container');
@@ -596,11 +849,52 @@ export function buildStructure() {
     let currentSubsection = null;
     let position = 1; // Start position counter
 
+    // Initialize JSON structure with total counts
+    let jsonStructure = {
+        totalSections: 0,
+        totalSubsections: 0,
+        totalSubSubsections: 0,
+        sections: []
+    };
+
+    // First pass: Calculate total counts
+    sections.forEach(section => {
+        const paragraph = section.querySelector('p');
+
+        if (paragraph.classList.contains('section-branch')) {
+            jsonStructure.totalSections++;
+        } else if (paragraph.classList.contains('subsection-branch')) {
+            jsonStructure.totalSubsections++;
+        } else if (paragraph.classList.contains('sub-subsection-branch')) {
+            jsonStructure.totalSubSubsections++;
+        }
+    });
+
     sections.forEach((section, index) => {
         const paragraph = section.querySelector('p');
-        let textContent = paragraph.textContent;
 
-        if (textContent.length > 20) {
+            // Function to get text content excluding specified elements
+        function getTextContentExcludingElements(element) {
+        let textContent = '';
+        element.childNodes.forEach(node => {
+            if (node.nodeType === Node.TEXT_NODE) {
+                textContent += node.textContent;
+            } else if (node.nodeType === Node.ELEMENT_NODE) {
+                const tagName = node.tagName.toLowerCase();
+                if (tagName !== 'div' || (!node.classList.contains('code-type-select') && !node.classList.contains('gist-container-div'))) {
+                    textContent += getTextContentExcludingElements(node);
+                }
+            }
+        });
+            return textContent;
+        }
+
+    // Get text content excluding specific div elements
+    let textContent = getTextContentExcludingElements(paragraph);
+
+        // let textContent = paragraph.textContent;
+
+        if (textContent.length > 80) {
             textContent = textContent.slice(0, 80) + '...';
         }
 
@@ -642,26 +936,38 @@ export function buildStructure() {
             const subSubsectionCount = calculateTotalSubSubsections(index + 1);
 
             // Create badges for subsection and sub-subsection counts
-            const badges = document.createDocumentFragment();
+            if (subsectionCount > 0 || subSubsectionCount > 0) {
+                const badges = document.createDocumentFragment();
 
-            if (subsectionCount > 0) {
-                const subsectionBadge = document.createElement('span');
-                subsectionBadge.classList.add('badge', 'badge-secondary');
-                subsectionBadge.textContent = `${subsectionCount}`;
-                badges.appendChild(subsectionBadge);
-                badges.appendChild(document.createTextNode(' ')); // Add a space
+                if (subsectionCount > 0) {
+                    const subsectionBadge = document.createElement('span');
+                    subsectionBadge.classList.add('badge', 'badge-secondary');
+                    subsectionBadge.textContent = `${subsectionCount}`;
+                    badges.appendChild(subsectionBadge);
+                    badges.appendChild(document.createTextNode(' ')); // Add a space
+                }
+
+                if (subSubsectionCount > 0) {
+                    const subSubsectionBadge = document.createElement('span');
+                    subSubsectionBadge.classList.add('badge', 'badge-secondary');
+                    subSubsectionBadge.textContent = `${subSubsectionCount}`;
+                    badges.appendChild(subSubsectionBadge);
+                }
+
+                // Append badges to the button
+                button.appendChild(document.createTextNode(' ')); // Add a space between text and badges
+                button.appendChild(badges);
             }
 
-            // if (subSubsectionCount > 0) {
-            //     const subSubsectionBadge = document.createElement('span');
-            //     subSubsectionBadge.classList.add('badge', 'badge-secondary');
-            //     subSubsectionBadge.textContent = `sss: ${subSubsectionCount}`;
-            //     badges.appendChild(subSubsectionBadge);
-            // }
-
-            // Append badges to the button
-            button.appendChild(document.createTextNode(' ')); // Add a space between text and badges
-            button.appendChild(badges);
+            // Add to JSON structure
+            const sectionEntry = {
+                type: 'section',
+                text: textContent,
+                position: position, // Added position here
+                subsections: [], // Initialize empty array for subsections
+                subsectionCount: subsectionCount // Store subsection count for this section
+            };
+            jsonStructure.sections.push(sectionEntry);
 
             position++;
         } else if (paragraph.classList.contains('subsection-branch')) {
@@ -692,6 +998,18 @@ export function buildStructure() {
                     button.appendChild(subSubsectionBadge);
                 }
 
+                // Add to JSON structure
+                const lastSection = jsonStructure.sections[jsonStructure.sections.length - 1];
+                const subsectionEntry = {
+                    type: 'subsection',
+                    text: textContent,
+                    position: position, // Added position here
+                    subSubsections: [], // Initialize empty array for sub-subsections
+                    subSubsectionCount: subSubsectionCount // Store sub-subsection count for this subsection
+                };
+
+                lastSection.subsections.push(subsectionEntry);
+
                 position++;
             }
         } else if (paragraph.classList.contains('sub-subsection-branch')) {
@@ -703,6 +1021,17 @@ export function buildStructure() {
                 subSubsectionContent.appendChild(button); // Append the button to the sub-subsection content
                 subSubsection.appendChild(subSubsectionContent);
                 currentSubsection.querySelector('.subsection-list').appendChild(subSubsection);
+
+                // Add to JSON structure
+                const lastSubsection = jsonStructure.sections[jsonStructure.sections.length - 1].subsections[
+                    jsonStructure.sections[jsonStructure.sections.length - 1].subsections.length - 1
+                ];
+                lastSubsection.subSubsections.push({
+                    type: 'sub-subsection',
+                    text: textContent,
+                    position: position // Added position here
+                });
+
                 position++;
             }
         }
@@ -714,13 +1043,16 @@ export function buildStructure() {
 
         // Construct the display string with conditional checks and ternary operators
         const sectionCountText =
-            (sectionCountValue > 0 ? `s : ${sectionCountValue} ` : '') +
-            (subsectionCountValue > 0 ? ` | ss : ${subsectionCountValue} ` : '') +
-            (subSubsectionCountValue > 0 ? ` | sss : ${subSubsectionCountValue}` : '');
+            (sectionCountValue > 0 ? `s: ${sectionCountValue}` : '') +
+            (subsectionCountValue > 0 ? ` | ss: ${subsectionCountValue}` : '') +
+            (subSubsectionCountValue > 0 ? ` | sss: ${subSubsectionCountValue}` : '');
 
         // Set the textContent of sectionCount element
         sectionCount.textContent = sectionCountText.trim() ? ` | ${sectionCountText}` : '';
     });
+
+    // Log the JSON structure
+    console.log('JSON Structure:', JSON.stringify(jsonStructure, null, 2));
 
     // Determine if the checkbox is checked or not
     if (!targetCheckbox.checked && structureContainer.querySelector('button')) {
@@ -730,7 +1062,6 @@ export function buildStructure() {
         targetCheckbox.checked = false;
     }
 }
-
 
 function toggleVisibility(element) {
     if (element.style.display === 'none' || element.style.display === '') {
@@ -747,8 +1078,8 @@ function calculateTotalSubsections(start) {
     for (let i = start; i < paragraphs.length; i++) {
         const paragraph = paragraphs[i];
 
-        if (paragraph.classList.contains('section-branch') ) {
-            break; // Stop counting if a section-branch or sub-subsection-branch is found
+        if (paragraph.classList.contains('section-branch')) {
+            break; // Stop counting if a section-branch is found
         }
 
         if (paragraph.classList.contains('subsection-branch')) {

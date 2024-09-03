@@ -46,7 +46,7 @@ export function RemoveEmptyTagsAfterRemovingEdit() {
         if (paragraph) {
             // Function to remove empty tags
             const removeEmptyTags = (node) => {
-                const tagsToRemove = ['B', 'I', 'BUTTON'];
+                const tagsToRemove = ['B', 'BUTTON'];
                 const children = Array.from(node.childNodes);
 
                 children.forEach(child => {

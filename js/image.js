@@ -6,7 +6,7 @@ import { updateVersionControl } from "./versionControl.js";
 
 
 
-function removeBRsInPara(pElement) {
+export function removeBRsInPara(pElement) {
     // Select the <p> element with the specified class
     // Check if the <p> element is found
     if (!pElement) {
@@ -88,8 +88,10 @@ function removeBRsInPara(pElement) {
 //     });
 
 // });
-document.addEventListener('DOMContentLoaded', () => {
 
+
+
+export function LoadImageEventListener(){
     const editor = document.getElementById('editor');
     const insertImageBtn = document.getElementById('insert-image-btn');
     const imageUpload = document.getElementById('image-upload');
@@ -150,6 +152,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
+    editor.addEventListener('click', (event) => {
+        if (event.target.tagName === 'IMG') {
+            imageOptions.style.display = 'flex';
+        } else {
+            imageOptions.style.display = 'none';
+            
+        }
+    });
+
+
+
     // Function to handle image upload (from input or drag-and-drop)
     function handleImageUpload(file) {
         let activeParagraph = getActiveParagraph();
@@ -193,7 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
             updateVersionControl();
         }
     }
-});
 
 
 
@@ -202,30 +214,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-const imageOptions = document.getElementById('image-options');
-
-
-window.hideImageToolbox = hideImageToolbox;
-export function hideImageToolbox(){
-    // const imageOptions = document.getElementById('image-options');
-    imageOptions.style.display = 'none';
-}
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    const editor = document.getElementById('editor');
-    // const imageOptions = document.getElementById('image-options');
     let selectedImage = null;
 
     // Event listener for image click
@@ -269,9 +257,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
 
-
-
-
     // Stop the timeout if the mouse is over the dropdown
     imageOptions.addEventListener('mouseover', () => {
         clearTimeout(toolboxImageTimeout);
@@ -288,16 +273,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-// hide toolbox if clic outside
+// hide toolbox if click outside
 
-    editor.addEventListener('click', (event) => {
-        if (event.target.tagName === 'IMG') {
-            imageOptions.style.display = 'flex';
-        } else {
-            imageOptions.style.display = 'none';
-            
-        }
-    });
 
 
 
@@ -424,5 +401,49 @@ document.addEventListener('DOMContentLoaded', () => {
             
         }
     });
+
+
+
+
+
+}
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    LoadImageEventListener();
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const imageOptions = document.getElementById('image-options');
+
+
+window.hideImageToolbox = hideImageToolbox;
+export function hideImageToolbox(){
+    // const imageOptions = document.getElementById('image-options');
+    imageOptions.style.display = 'none';
+}
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+
 });
 

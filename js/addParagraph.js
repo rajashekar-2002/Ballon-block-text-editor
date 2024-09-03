@@ -3,15 +3,22 @@ import { printParagraphDetails } from './TextSelection.js';
 import { buildAnchorStructure } from './anchorStructure.js';
 import { handleDragBulletOver, handleDragBulletStart, handleDropBullet, hideBulletToolbox, removeSelectedClassFromBullets } from './bullet.js';
 import { hideImageToolbox } from './image.js';
-import { getActiveParagraph, hideToolbox, setActiveParagraph, showToolbox } from './para-toolbox.js';
+import { getActiveParagraph, hideToolbox, hideToolboxButton, setActiveParagraph, showToolbox } from './para-toolbox.js';
 import { buildStructure, validateStructure } from './section.js';
 import { hideTableToolbox, unselectAllCells } from './table.js';
 import { updateRangeSlider, updateVersionControl } from './versionControl.js';
 
 
 
+window.savestructurecontainer=savestructurecontainer;
+export function savestructurecontainer(){
+    let htmlContent = document.getElementById("structure-container").innerHTML;
+    console.log(htmlContent);
+}
+
 
 document.addEventListener('DOMContentLoaded', function() {
+
     addParagraph();
     const headingParagraph = document.getElementById('title-input');
     const subHeadingParagraph = document.getElementById('subtitle-input');
@@ -97,6 +104,7 @@ export function addParagraph(afterElement = null, focus=false, classname= null) 
     paraContainer.addEventListener('drop', onDrop);
 
     paraContainer.addEventListener('input',function(){
+        hideToolboxButton();
         hideBulletToolbox();
         hideTableToolbox();
         updateVersionControl();
@@ -219,7 +227,7 @@ export function addParagraph(afterElement = null, focus=false, classname= null) 
         p.addEventListener('click', (e) => {
 
         if (p) {
-            const isTextNode = e.target.nodeType === Node.TEXT_NODE || e.target.tagName === 'P' || e.target.tagName === 'CODE' || e.target.tagName === 'BLOCKQUOTE' ;
+            const isTextNode = e.target.nodeType === Node.TEXT_NODE || e.target.tagName === 'P' || e.target.tagName === 'CODE' || e.target.tagName === 'BLOCKQUOTE' || e.target.id === 'para-toolbox-options';
 
             if (isTextNode) {
                 hideToolbox();
@@ -257,6 +265,7 @@ export function addParagraph(afterElement = null, focus=false, classname= null) 
     paraContainer.appendChild(holder);
     paraContainer.appendChild(p);
     paraContainer.appendChild(deleteBtn);
+
 
     if (afterElement) {
         afterElement.after(paraContainer);
@@ -308,6 +317,72 @@ export function handlePasteAsPlainText(event) {
     selection.removeAllRanges();
     selection.addRange(range);
 }
+
+// export function handlePasteAsPlainText(event) {
+//     event.preventDefault(); // Prevent the default paste behavior
+//     removeDirectTextNodesOutsideParaContainer();
+//     // Get the plain text from the clipboard
+//     const text = (event.clipboardData || window.clipboardData).getData('text/plain');
+
+//     // Get the current selection
+//     const selection = window.getSelection();
+//     if (!selection.rangeCount) return;
+
+//     // Get the range of the current selection
+//     const range = selection.getRangeAt(0);
+
+//     // Remove any existing content within the range
+//     range.deleteContents();
+
+//     // Create a document fragment to hold the nodes
+//     const fragment = document.createDocumentFragment();
+
+//     // Split the text by line breaks to preserve them
+//     const lines = text.split('\n');
+//     lines.forEach((line, index) => {
+//         if (index > 0) {
+//             fragment.appendChild(document.createElement('br'));
+//         }
+//         fragment.appendChild(document.createTextNode(line));
+//     });
+
+//     // Insert the fragment with line breaks preserved
+//     range.insertNode(fragment);
+
+//     // Move the cursor to the end after inserting text
+//     range.collapse(false);
+//     selection.removeAllRanges();
+//     // selection.addRange(range);
+//     removeDirectTextNodesOutsideParaContainer();
+ 
+// }
+
+// function removeDirectTextNodesOutsideParaContainer() {
+//     const editor = document.getElementById('editor');
+//     const paraContainers = editor.querySelectorAll('#para-container');
+//     const paraContainerNodes = new Set(paraContainers);
+
+//     // Get direct children of the editor
+//     const directChildren = Array.from(editor.childNodes);
+
+//     directChildren.forEach(node => {
+//         if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim() !== '') {
+//             // Check if the direct parent of the text node is not a para-container
+//             if (!paraContainerNodes.has(node.parentNode)) {
+//                 node.parentNode.removeChild(node);
+//             }
+//         }
+//     });
+// }
+
+
+
+
+
+
+
+
+
 
 
 

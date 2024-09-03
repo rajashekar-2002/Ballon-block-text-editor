@@ -55,6 +55,14 @@ function clearFormatting() {
         return;
           }
 
+      
+
+
+
+
+
+
+
       //handle table clear formatting seperatky
       //remove table link method for selected
       if( (startNode.tagName === 'TD'  || endNode.tagName === 'TD' )){
@@ -91,7 +99,7 @@ function clearFormatting() {
       range.setEndAfter(endNode);
 
       selection.removeAllRanges();
-      selection.addRange(range);
+      // selection.addRange(range);
 
 
 
@@ -107,7 +115,7 @@ function clearFormatting() {
       selection.removeAllRanges();
 
 
-
+      //remove all empty tags if available button b add if any
       // Additional functions after clearing formatting
       RemoveEmptyTagsAfterRemovingEdit();
       buildAnchorStructure();

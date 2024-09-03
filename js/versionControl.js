@@ -3,12 +3,12 @@
 import { addParagraph, deleteParagraph, handlePasteAsPlainText, onDragEnd, onDragOver, onDragStart, onDrop, onKeyDown } from "./addParagraph.js";
 import { buildAnchorStructure } from "./anchorStructure.js";
 import { addBullet, handleDragBulletOver, handleDragBulletStart, handleDropBullet, hideBulletToolbox, removeSelectedClassFromBullets, showBulletToolbox } from "./bullet.js";
-import { hideImageToolbox } from "./image.js";
-import { getActiveParagraph, hideToolbox, setActiveParagraph, showToolbox } from "./para-toolbox.js";
+import { hideImageToolbox, LoadImageEventListener } from "./image.js";
+import { getActiveParagraph, hideToolbox, hideToolboxButton, setActiveParagraph, showToolbox } from "./para-toolbox.js";
+import { fetchGistContent, insertCodeBlock, insertPlainText, isGistUrl } from "./paste-gist.js";
 import { buildStructure, validateStructure } from "./section.js";
 import { hideTableToolbox, unselectAllCells } from "./table.js";
 import { printParagraphDetails } from "./TextSelection.js";
-
 
 function attachEventListeners() {
 
@@ -19,6 +19,33 @@ function attachEventListeners() {
             addParagraph();
         }
     });
+
+
+    // Handle paste github gist event in the editor
+    editor.addEventListener('paste', async (event) => {
+            const clipboardData = event.clipboardData || window.clipboardData;
+            const pastedData = clipboardData.getData('text');
+    
+            if (isGistUrl(pastedData)) {
+                event.preventDefault(); // Prevent the default paste action
+    
+                try {
+                    const gistContent = await fetchGistContent(pastedData);
+                    insertCodeBlock(gistContent, pastedData);
+    
+                } catch (error) {
+                    console.error('Failed to fetch Gist content:', error);
+                    insertPlainText(pastedData); // Insert URL as plain text
+                }
+            } else {
+                insertPlainText(pastedData); // Insert URL as plain text
+            }
+            
+    });
+
+    LoadImageEventListener();
+
+
 
 
 
@@ -81,6 +108,7 @@ function attachEventListeners() {
         container.addEventListener('dragover', onDragOver);
         container.addEventListener('drop', onDrop);
         container.addEventListener('input', function() {
+            hideToolboxButton();
             hideBulletToolbox();
             hideTableToolbox();
             hideImageToolbox();
@@ -257,42 +285,50 @@ function attachEventListeners() {
 }
 
 
-
-
-
-
 function fixEditorStructure() {
     const paraContainers = document.querySelectorAll('.para-container');
+    console.log(paraContainers);
 
     paraContainers.forEach(container => {
-        const paragraphs = container.querySelectorAll('p.para-container-paragraph, p.bullet-list' );
-        
+        const paragraphs = container.querySelectorAll('p.para-container-paragraph, p.bullet-list');
+        console.log(paragraphs);
+
         paragraphs.forEach(p => {
-            // Move blockquote and table elements inside the p tag
             let nextSibling = p.nextElementSibling;
-            while (nextSibling && (nextSibling.tagName === 'BLOCKQUOTE' || nextSibling.tagName === 'TABLE' || nextSibling.tagName === 'FIGCAPTION') || (nextSibling.tagName === 'DIV' && nextSibling.classList.contains('table-container')) || (nextSibling.tagName === 'DIV' && nextSibling.classList.contains('image-container')) || (nextSibling.tagName === 'DIV' && nextSibling.classList.contains('preview')) || (nextSibling.tagName === 'DIV' && nextSibling.classList.contains('gist-wrapper'))) {
+
+            while (nextSibling && (
+                nextSibling.tagName === 'BLOCKQUOTE' || 
+                nextSibling.tagName === 'TABLE' || 
+                nextSibling.tagName === 'FIGCAPTION' ||
+                (nextSibling.tagName === 'DIV' && 
+                    (nextSibling.classList.contains('table-container') || 
+                     nextSibling.classList.contains('image-container') || 
+                     nextSibling.classList.contains('preview') || 
+                     nextSibling.classList.contains('gist-wrapper') || 
+                     nextSibling.classList.contains('code-block-div'))
+                )
+            )) {
                 const elementToMove = nextSibling;
                 nextSibling = nextSibling.nextElementSibling;
                 p.appendChild(elementToMove);
             }
 
-            // Move div with id "captionContainer" inside the p tag if it's next
+            // Check if nextSibling exists and if it's the "captionContainer" or "bullet-container"
             if (nextSibling && nextSibling.id === 'captionContainer') {
                 const elementToMove = nextSibling;
                 nextSibling = nextSibling.nextElementSibling;
                 p.appendChild(elementToMove);
             }
 
-            // Move div with class "bullet-container" inside the p tag if it's next
             if (nextSibling && nextSibling.classList.contains('bullet-container')) {
                 const elementToMove = nextSibling;
                 nextSibling = nextSibling.nextElementSibling;
                 p.appendChild(elementToMove);
             }
 
-            // Remove empty p tags after the p tag
+            // Remove empty p tags or <br> tags after the current p tag
             let emptyParagraph = p.nextElementSibling;
-            while ((emptyParagraph && emptyParagraph.tagName === 'P') || (emptyParagraph && emptyParagraph.tagName === 'BR') && emptyParagraph.innerHTML.trim() === '') {
+            while (emptyParagraph && (emptyParagraph.tagName === 'P' || emptyParagraph.tagName === 'BR') && emptyParagraph.innerHTML.trim() === '') {
                 const paragraphToRemove = emptyParagraph;
                 emptyParagraph = emptyParagraph.nextElementSibling;
                 paragraphToRemove.parentNode.removeChild(paragraphToRemove);
@@ -300,7 +336,7 @@ function fixEditorStructure() {
         });
     });
 
-    // Optional: Handle "captionContainer" and "bullet-container" not inside paragraphs
+    // Handle "captionContainer" not inside paragraphs
     const captionContainers = document.querySelectorAll('#captionContainer');
     captionContainers.forEach(container => {
         if (container.parentElement.classList.contains('para-container')) {
@@ -308,6 +344,7 @@ function fixEditorStructure() {
         }
     });
 
+    // Handle "bullet-container" not inside paragraphs
     const bulletContainers = document.querySelectorAll('.bullet-container');
     bulletContainers.forEach(container => {
         if (container.parentElement.classList.contains('para-container')) {
@@ -315,6 +352,82 @@ function fixEditorStructure() {
         }
     });
 }
+
+
+
+
+// function fixEditorStructure() {
+//     const paraContainers = document.querySelectorAll('.para-container');
+
+//     paraContainers.forEach(container => {
+//         const paragraphs = container.querySelectorAll('p.para-container-paragraph, p.bullet-list' );
+        
+//         paragraphs.forEach(p => {
+//             // Move blockquote and table elements inside the p tag
+//             let nextSibling = p.nextElementSibling;
+//             while (nextSibling && (nextSibling.tagName === 'BLOCKQUOTE' || nextSibling.tagName === 'TABLE' || nextSibling.tagName === 'FIGCAPTION') || (nextSibling.tagName === 'DIV' && nextSibling.classList.contains('table-container')) || (nextSibling.tagName === 'DIV' && nextSibling.classList.contains('image-container')) || (nextSibling.tagName === 'DIV' && nextSibling.classList.contains('preview')) || (nextSibling.tagName === 'DIV' && nextSibling.classList.contains('gist-wrapper')) || (nextSibling.tagName === 'DIV' && nextSibling.classList.contains('code-block-div'))) {
+//                 const elementToMove = nextSibling;
+//                 nextSibling = nextSibling.nextElementSibling;
+//                 p.appendChild(elementToMove);
+//             }
+
+//             // Move div with id "captionContainer" inside the p tag if it's next
+//             if (nextSibling && nextSibling.id === 'captionContainer') {
+//                 const elementToMove = nextSibling;
+//                 nextSibling = nextSibling.nextElementSibling;
+//                 p.appendChild(elementToMove);
+//             }
+
+//             // Move div with class "bullet-container" inside the p tag if it's next
+//             if (nextSibling && nextSibling.classList.contains('bullet-container')) {
+//                 const elementToMove = nextSibling;
+//                 nextSibling = nextSibling.nextElementSibling;
+//                 p.appendChild(elementToMove);
+//             }
+
+//             // Remove empty p tags after the p tag
+//             let emptyParagraph = p.nextElementSibling;
+//             while ((emptyParagraph && emptyParagraph.tagName === 'P') || (emptyParagraph && emptyParagraph.tagName === 'BR') && emptyParagraph.innerHTML.trim() === '') {
+//                 const paragraphToRemove = emptyParagraph;
+//                 emptyParagraph = emptyParagraph.nextElementSibling;
+//                 paragraphToRemove.parentNode.removeChild(paragraphToRemove);
+//             }
+//         });
+//     });
+
+//     // Optional: Handle "captionContainer" and "bullet-container" not inside paragraphs
+//     const captionContainers = document.querySelectorAll('#captionContainer');
+//     captionContainers.forEach(container => {
+//         if (container.parentElement.classList.contains('para-container')) {
+//             container.parentElement.removeChild(container);
+//         }
+//     });
+
+//     const bulletContainers = document.querySelectorAll('.bullet-container');
+//     bulletContainers.forEach(container => {
+//         if (container.parentElement.classList.contains('para-container')) {
+//             container.parentElement.removeChild(container);
+//         }
+//     });
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function countTotalWords() {
