@@ -30,17 +30,32 @@ function cleanEditor() {
     });
 }
 
-
+function addIncrementingValueAttributes() {
+    console.log(">>>>>>>>>>>>><<<");
+    // Select all <p> elements with the class 'para-container-paragraph' inside the div with id 'ReadheadingAndEditor'
+    const paragraphs = document.querySelectorAll('#ReadheadingAndEditor p.section-branch, p.subsection-branch, #ReadheadingAndEditor p.sub-subsection-branch');
+    console.log(paragraphs);
+    // Iterate over the selected <p> elements
+    paragraphs.forEach((paragraph, index) => {
+        console.log(index + "");
+        // Set the 'value' attribute with an incrementing number starting from 1
+        paragraph.setAttribute('value', index + 1);
+    });
+}
 
 
 // Call the function to clean the editor
 cleanEditor();
+// Call the function to apply the changes
 
 
   
   // Define the HTML content you want to display
   const htmlContent = `
-                          <p id="title-input" class="heading-paragraph placeholder" contenteditable="true" style="width: 90%; font-size: 2.5em;
+
+ 
+
+                <p id="title-input" class="heading-paragraph placeholder" contenteditable="true" style="width: 90%; font-size: 2.5em;
                 padding: 5px; outline: none; margin-left: 5%; white-space: wrap;  margin-top: 2%; margin-bottom: 0%;">Enter heading...</p>
 
                 <p id="subtitle-input" class="sub-heading-paragraph placeholder" contenteditable="true" style="width: 90%; font-size: 1.5em; border-bottom: 2px solid #ccc; 
@@ -50,42 +65,11 @@ cleanEditor();
 
                 
 
-            <div class="para-container" draggable="true"><grammarly-extension data-grammarly-shadow-root="true" style="position: absolute; top: 0px; left: 0px; pointer-events: none;" class="dnXmp"></grammarly-extension><grammarly-extension data-grammarly-shadow-root="true" style="position: absolute; top: 0px; left: 0px; pointer-events: none;" class="dnXmp"></grammarly-extension><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph section-branch" spellcheck="true" data-last-key=""> &lt;p id="title-input" class="heading-paragraph placeholder" contenteditable="true" style="width: 90%; font-size: 2.5em;
-                padding: 5px; outline: none; margin-left: 5%; white-space: wrap;  margin-top: 2%; margin-bottom: 0%;"&gt;Enter heading...&lt;/p&gt;
+            <div class="para-container" draggable="true"><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph section-branch" spellcheck="false" data-last-key="">1</p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph subsection-branch" spellcheck="false" data-last-key="">2</p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph" spellcheck="false" data-last-key="">3</p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph" spellcheck="false" data-last-key="">4</p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph section-branch" spellcheck="false" data-last-key="">5</p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph"><br></p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph"><br></p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph"><br></p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph"><br></p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph subsection-branch" spellcheck="false" data-last-key="">6</p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph"><br></p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph"><br></p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph sub-subsection-branch" spellcheck="false" data-last-key="">7</p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph"><br></p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph"><br></p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph"><br></p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph"><br></p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph"><br></p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph sub-subsection-branch" spellcheck="false" data-last-key="">8</p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph"><br></p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph" spellcheck="false" data-last-key="">9</p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph"><br></p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph"><br></p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph"><br></p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph section-branch" spellcheck="false" data-last-key="">10</p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph"><br></p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph"><br></p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph activeParagraph subsection-branch" spellcheck="false" data-last-key="">11</p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph"><br></p><div class="delete-btn">✖</div></div></div>
 
-                &lt;p id="subtitle-input" class="sub-heading-paragraph placeholder" contenteditable="true" style="width: 90%; font-size: 1.5em; border-bottom: 2px solid #ccc; 
-                padding: 7px; outline: none; margin-left: 5%; white-space: wrap; margin-bottom: 2%; "&gt;Enter sub-heading...&lt;/p&gt;
+         
 
-                &lt;div id="editor" class="editor"&gt;
 
-                
-
-            &lt;div class="para-container" draggable="true"&gt;&lt;grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"&gt;&lt;/grammarly-extension&gt;&lt;grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"&gt;&lt;/grammarly-extension&gt;&lt;div class="add-btn"&gt;+&lt;/div&gt;&lt;div class="holder"&gt;⇅&lt;/div&gt;&lt;p contenteditable="true" class="para-container-paragraph activeParagraph" spellcheck="true" data-last-key=""&gt;           &amp;lt;p id="title-input" class="heading-paragraph placeholder" contenteditable="true" style="width: 90%; font-size: 2.5em;\n                padding: 5px; outline: none; margin-left: 5%; white-space: wrap;  margin-top: 2%; margin-bottom: 0%;"&amp;gt;Enter heading...&amp;lt;/p&amp;gt;\n\n                &amp;lt;p id="subtitle-input" class="sub-heading-paragraph placeholder" contenteditable="true" style="width: 90%; font-size: 1.5em; border-bottom: 2px solid #ccc; \n                padding: 7px; outline: none; margin-left: 5%; white-space: wrap; margin-bottom: 2%; "&amp;gt;Enter sub-heading...&amp;lt;/p&amp;gt;\n\n                &amp;lt;div id="editor" class="editor"&amp;gt;\n\n                \n\n            &amp;lt;div class="para-container" draggable="true"&amp;gt;&amp;lt;grammarly-extension data-grammarly-shadow-root="true" style="position: absolute; top: 0px; left: 0px; pointer-events: none;" class="dnXmp"&amp;gt;&amp;lt;/grammarly-extension&amp;gt;&amp;lt;grammarly-extension data-grammarly-shadow-root="true" style="position: absolute; top: 0px; left: 0px; pointer-events: none;" class="dnXmp"&amp;gt;&amp;lt;/grammarly-extension&amp;gt;&amp;lt;div class="add-btn"&amp;gt;+&amp;lt;/div&amp;gt;&amp;lt;div class="holder"&amp;gt;⇅&amp;lt;/div&amp;gt;&amp;lt;p contenteditable="true" class="para-container-paragraph section-branch" spellcheck="true" data-last-key=""&amp;gt;document.querySelector("p").classList.add('section-branch');\r\n&amp;lt;br&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;div class="delete-btn"&amp;gt;✖&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div class="para-container" draggable="true"&amp;gt;&amp;lt;grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"&amp;gt;&amp;lt;/grammarly-extension&amp;gt;&amp;lt;grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"&amp;gt;&amp;lt;/grammarly-extension&amp;gt;&amp;lt;div class="add-btn"&amp;gt;+&amp;lt;/div&amp;gt;&amp;lt;div class="holder"&amp;gt;⇅&amp;lt;/div&amp;gt;&amp;lt;p contenteditable="true" class="para-container-paragraph subsection-branch" spellcheck="true" data-last-key=""&amp;gt;document.querySelector("p").classList.add('section-branch');\r\n&amp;lt;br&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;div class="delete-btn"&amp;gt;✖&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div class="para-container" draggable="true"&amp;gt;&amp;lt;grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"&amp;gt;&amp;lt;/grammarly-extension&amp;gt;&amp;lt;grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"&amp;gt;&amp;lt;/grammarly-extension&amp;gt;&amp;lt;div class="add-btn"&amp;gt;+&amp;lt;/div&amp;gt;&amp;lt;div class="holder"&amp;gt;⇅&amp;lt;/div&amp;gt;&amp;lt;p contenteditable="true" class="para-container-paragraph activeParagraph section-branch" spellcheck="true" data-last-key=""&amp;gt;document.querySelector("p").classList.add('section-branch');\r\n&amp;lt;br&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;div class="delete-btn"&amp;gt;✖&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;&lt;br&gt;&lt;/p&gt;&lt;div class="delete-btn"&gt;✖&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;<br></p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><grammarly-extension data-grammarly-shadow-root="true" class="dnXmp" style="position: absolute; top: 0px; left: 0px; pointer-events: none;"></grammarly-extension><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph" spellcheck="false"><br></p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph">
-        <div class="table-container">
-            <table id="dynamicTable">
-                <thead>
-                    <tr>
-                        <th draggable="true" ondragstart="startDrag(event, this)">Name</th>
-                        <th draggable="true" ondragstart="startDrag(event, this)">Age</th>
-                        <th draggable="true" ondragstart="startDrag(event, this)">Email</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td draggable="true" ondragstart="startDrag(event, this)" onclick="selectCell(this)" contenteditable="true" class="editable">row 1 col 1</td>
-                        <td draggable="true" ondragstart="startDrag(event, this)" onclick="selectCell(this)" contenteditable="true" class="editable">row 1 col 2</td>
-                        <td draggable="true" ondragstart="startDrag(event, this)" onclick="selectCell(this)" contenteditable="true" class="editable">row 1 col 3</td>
-                    </tr>
-                    <tr>
-                        <td draggable="true" ondragstart="startDrag(event, this)" onclick="selectCell(this)" contenteditable="true" class="editable">row 2 col 1</td>
-                        <td draggable="true" ondragstart="startDrag(event, this)" onclick="selectCell(this)" contenteditable="true" class="editable">row 2 col 2</td>
-                        <td draggable="true" ondragstart="startDrag(event, this)" onclick="selectCell(this)" contenteditable="true" class="editable">row 2 col 3</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-            
-        </p><div class="delete-btn">✖</div></div><div class="para-container" draggable="true"><grammarly-extension data-grammarly-shadow-root="true" style="position: absolute; top: 0px; left: 0px; pointer-events: none;" class="dnXmp"></grammarly-extension><grammarly-extension data-grammarly-shadow-root="true" style="position: absolute; top: 0px; left: 0px; pointer-events: none;" class="dnXmp"></grammarly-extension><div class="add-btn">+</div><div class="holder">⇅</div><p contenteditable="true" class="para-container-paragraph bullet-list activeParagraph" spellcheck="true"><div class="bullet-container"><ul class="bullet-container-ul"><li draggable="true">text heregsdfgd</li><li draggable="true">sdfgsdfg</li></ul></div></p><div class="delete-btn">✖</div></div></div>
 `;
 
 
@@ -222,19 +206,19 @@ fixEditorStructure();
 
 
 
-const jsonData =  {
-    "totalSections": 2,
-    "totalSubsections": 1,
-    "totalSubSubsections": 0,
+const jsonData =   {
+    "totalSections": 3,
+    "totalSubsections": 3,
+    "totalSubSubsections": 2,
     "sections": [
       {
         "type": "section",
-        "text": "sadfasdf",
+        "text": "1 rgb(173, 216, 230) rgb(173, 216, 230)rgb(173, 216, 230)rgb(173, 216, 230)rgb(173, 216, 230)",
         "position": 1,
         "subsections": [
           {
             "type": "subsection",
-            "text": "sdfsdfnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
+            "text": "2",
             "position": 2,
             "subSubsections": [],
             "subSubsectionCount": 0
@@ -244,20 +228,54 @@ const jsonData =  {
       },
       {
         "type": "section",
-        "text": "sdfsdfg",
+        "text": "5",
         "position": 3,
-        "subsections": [],
-        "subsectionCount": 0
+        "subsections": [
+          {
+            "type": "subsection",
+            "text": "6",
+            "position": 4,
+            "subSubsections": [
+              {
+                "type": "sub-subsection",
+                "text": "7",
+                "position": 5
+              },
+              {
+                "type": "sub-subsection",
+                "text": "8",
+                "position": 6
+              }
+            ],
+            "subSubsectionCount": 2
+          }
+        ],
+        "subsectionCount": 1
+      },
+      {
+        "type": "section",
+        "text": "10",
+        "position": 7,
+        "subsections": [
+          {
+            "type": "subsection",
+            "text": "11",
+            "position": 8,
+            "subSubsections": [],
+            "subSubsectionCount": 0
+          }
+        ],
+        "subsectionCount": 1
       }
     ]
   };
 
 
 
-function findParagraphByPositionForSections(position) {
+  function findParagraphByPositionForSections(position) {
     // List all <p> tags with section-related classes
     const paragraphs = Array.from(document.querySelectorAll('p.section-branch, p.subsection-branch, p.sub-subsection-branch'));
-
+    console.log(paragraphs);
     // Find the <p> tag that matches the position
     if (position > 0 && position <= paragraphs.length) {
         console.log("??????????/",position);
@@ -267,7 +285,6 @@ function findParagraphByPositionForSections(position) {
         // Scroll to the target paragraph
         targetParagraph.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-        // targetParagraph.classList.add('shine-effect');
         targetParagraph.classList.add('shine-effect');
         // Remove the shine effect class after the animation ends
         targetParagraph.addEventListener('animationend', () => {
@@ -282,19 +299,15 @@ function findParagraphByPositionForSections(position) {
 }
 
 function createElement(type, text, className, count = 0, position = 0) {
+    const maxLength=55;
     const element = document.createElement('div');
     element.className = className;
-    element.innerHTML = `<span>${text}</span>`;
-
-    // if (count > 0) {
-    //     const badge = document.createElement('span');
-    //     badge.className = 'badge badge-secondary ml-1 ';
-    //     badge.textContent = count;
-    //     element.appendChild(badge);
-    // }
+    element.setAttribute('value', position); // Add position as value attribute
+    let truncate_text=text.substring(0, maxLength) + '...';
+    element.innerHTML = `<span>${truncate_text}</span>`;
 
     // Add the click event listener
-    element.addEventListener('click', () => {
+    element.addEventListener('click', (event) => {
         event.stopPropagation();
         findParagraphByPositionForSections(position);
     });
@@ -327,10 +340,139 @@ function drawStructure(data, container) {
     });
 }
 
+
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('structure-container');
     drawStructure(jsonData, container);
+
+    const editor = document.getElementById('ReadheadingAndEditor');
+
+    function getVisibleParagraphs() {
+        const paragraphs = Array.from(editor.querySelectorAll('p.para-container-paragraph'));
+        const visibleParagraphs = [];
+
+        const editorRect = editor.getBoundingClientRect();
+
+        paragraphs.forEach(p => {
+            const rect = p.getBoundingClientRect();
+            // Check if the paragraph is within the viewport
+            if (rect.top >= editorRect.top && rect.bottom <= editorRect.bottom) {
+                visibleParagraphs.push(p);
+            }
+        });
+
+        return visibleParagraphs;
+    }
+
+    function highlightMatchingElements() {
+        const visibleParagraphs = getVisibleParagraphs();
+        const highlightedValues = new Set(visibleParagraphs.map(p => p.getAttribute('value')));
+
+        // Remove all highlights from elements
+        container.querySelectorAll('.highlighted-section, .highlighted-subsection, .highlighted-subsubsection').forEach(el => el.classList.remove('highlighted-section', 'highlighted-subsection', 'highlighted-subsubsection'));
+
+        // Add highlight to the matching elements
+        container.querySelectorAll('div').forEach(div => {
+            const value = div.getAttribute('value');
+            if (highlightedValues.has(value)) {
+                const firstSpan = div.querySelector('span');
+                if (firstSpan) {
+                    if (div.classList.contains('section')) {
+                        firstSpan.classList.add('highlighted-section');
+                    } else if (div.classList.contains('subsection')) {
+                        firstSpan.classList.add('highlighted-subsection');
+                        // Ensure the parent section is highlighted
+                        const parentSection = div.closest('.section');
+                        if (parentSection) {
+                            const parentSpan = parentSection.querySelector('span');
+                            if (parentSpan) {
+                                parentSpan.classList.add('highlighted-section');
+                            }
+                        }
+                    } else if (div.classList.contains('sub-subsection')) {
+                        firstSpan.classList.add('highlighted-subsubsection');
+                        // Ensure the parent subsection and section are highlighted
+                        const parentSubsection = div.closest('.subsection');
+                        if (parentSubsection) {
+                            const parentSubsectionSpan = parentSubsection.querySelector('span');
+                            if (parentSubsectionSpan) {
+                                parentSubsectionSpan.classList.add('highlighted-subsection');
+                            }
+                            const parentSection = parentSubsection.closest('.section');
+                            if (parentSection) {
+                                const parentSectionSpan = parentSection.querySelector('span');
+                                if (parentSectionSpan) {
+                                    parentSectionSpan.classList.add('highlighted-section');
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    editor.addEventListener('scroll', highlightMatchingElements);
+
+    // Initial call to highlight elements when the page is loaded
+    highlightMatchingElements();
 });
 
+// Example CSS for different highlighting
+const css = `
+.highlighted-section {
+    background-color: rgb(144, 195, 220); /* Darker Light Blue */
+    color: black;
+}
+
+.highlighted-subsection {
+    background-color: rgb(184, 218, 235); /* Medium Light Blue */
+    color: black;
+}
+
+.highlighted-subsubsection {
+    background-color: rgb(214, 236, 235); /* Lighter Light Blue */
+    color: black;
+}
 
 
+`;
+
+const style = document.createElement('style');
+style.appendChild(document.createTextNode(css));
+document.head.appendChild(style);
+
+
+
+addIncrementingValueAttributes();
+
+
+
+
+// document.addEventListener('DOMContentLoaded', function() {
+//     const readheadingAndEditor = document.getElementById('ReadheadingAndEditor');
+//     const paragraphs = readheadingAndEditor.getElementsByClassName('para-container-paragraph');
+
+//     // Callback function to execute when entries change
+//     const callback = (entries, observer) => {
+//         entries.forEach(entry => {
+//             if (entry.isIntersecting) {
+//                 console.log('Visible:', entry.target);
+//             }
+//         });
+//     };
+
+//     // Create an IntersectionObserver instance
+//     const observer = new IntersectionObserver(callback, {
+//         root: readheadingAndEditor,
+//         threshold: 0.1 // Adjust the threshold value as needed
+//     });
+
+//     // Observe each paragraph element
+//     Array.from(paragraphs).forEach(paragraph => {
+//         observer.observe(paragraph);
+//     });
+// });

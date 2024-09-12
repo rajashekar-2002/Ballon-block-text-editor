@@ -71,6 +71,12 @@
 
 }
 
+/* hide scroll bar for all */
+::-webkit-scrollbar {
+    display: none;
+}
+  
+
 body {
     margin: 0;
     padding: 0;
@@ -124,6 +130,7 @@ body {
 #ReadheadingAndEditor{
     width:100%;
     height:100%;
+    overflow-y: scroll;
 }
 
 
@@ -202,8 +209,9 @@ body {
     align-items: center;
 }
 
-
-
+.highlighted {
+    background-color: yellow; /* Or any color you prefer for highlighting */
+}
 
 pre{
     color: var(--pre-code-text-color) !important;
@@ -947,6 +955,7 @@ button{
 .section {
     word-break: break-word;
     width:100%;
+    margin-top: 8px;
     /* font-size: 20px; */
     color: var(--section-text);
     border-left: 6px solid var(--section-border-left);
@@ -957,6 +966,7 @@ button{
 .subsection {
     word-break: break-word;
     width:100%;
+    margin-top: 8px;
     /* font-size: 17px; */
     color: var(--subsection-text);
     border-left: 4px solid var(--subsection-border-left);
@@ -967,7 +977,7 @@ button{
     word-break: break-word;
     width:100%;
     /* font-size: 14px; */
-
+    margin-top: 8px;
     color: var(--sub-subsection-text);
     border-left: 3px solid var(--sub-subsection-border-left);
     padding-left: 10px;

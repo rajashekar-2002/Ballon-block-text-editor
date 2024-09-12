@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Editor</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .card {
+            width: 300px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .card-footer {
+            background: #f8f9fa;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .edit-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: none;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .card:hover .edit-btn {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button id="createCardsBtn" class="btn btn-primary mt-4">Create Two Cards</button>
+
+        <div id="cardsContainer" class="card-container"></div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="editCardModal" tabindex="-1" aria-labelledby="editCardModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editCardModalLabel">Edit Card</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editCardForm">
+                            <div class="form-group">
+                                <label for="cardImage">Upload Image</label>
+                                <input type="file" class="form-control-file" id="cardImage">
+                            </div>
+                            <div class="form-group">
+                                <label for="cardTitle">Title</label>
+                                <input type="text" class="form-control" id="cardTitle">
+                            </div>
+                            <div class="form-group">
+                                <label for="cardDescription">Description</label>
+                                <textarea class="form-control" id="cardDescription"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="cardLink">Link</label>
+                                <input type="url" class="form-control" id="cardLink">
+                            </div>
+                            <button type="button" class="btn btn-danger" id="deleteCardBtn">Delete Card</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="saveChangesBtn">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        document.getElementById('createCardsBtn').addEventListener('click', function() {
+            createCard('https://via.placeholder.com/300x180', 'Card Title 1', 'This is the description for card 1', 'https://example.com');
+            createCard('https://via.placeholder.com/300x180', 'Card Title 2', 'This is the description for card 2', 'https://example.com');
+        });
+
+        function createCard(imageSrc, title, description, link) {
+            const cardContainer = document.getElementById('cardsContainer');
+            const card = document.createElement('div');
+            card.className = 'card';
+
+            card.innerHTML = `
+                <img src="${imageSrc}" class="card-img-top" alt="Card Image">
+                <div class="card-body">
+                    <h5 class="card-title">${title}</h5>
+                    <p class="card-text">${description}</p>
+                </div>
+                <div class="card-footer">
+                    <a href="${link}" target="_blank" class="card-link">Go to link</a>
+                </div>
+                <button class="edit-btn"><i class="fas fa-edit"></i></button>
+            `;
+
+            card.querySelector('.edit-btn').addEventListener('click', function() {
+                openEditModal(card);
+            });
+
+            cardContainer.appendChild(card);
+        }
+
+        function openEditModal(card) {
+            $('#editCardModal').modal('show');
+
+            const currentImage = card.querySelector('img').src;
+            const currentTitle = card.querySelector('.card-title').textContent;
+            const currentDescription = card.querySelector('.card-text').textContent;
+            const currentLink = card.querySelector('.card-link').href;
+
+            document.getElementById('cardTitle').value = currentTitle;
+            document.getElementById('cardDescription').value = currentDescription;
+            document.getElementById('cardLink').value = currentLink;
+
+            document.getElementById('saveChangesBtn').onclick = function() {
+                saveChanges(card);
+            };
+
+            document.getElementById('deleteCardBtn').onclick = function() {
+                deleteCard(card);
+            };
+        }
+
+        function saveChanges(card) {
+            const newTitle = document.getElementById('cardTitle').value;
+            const newDescription = document.getElementById('cardDescription').value;
+            const newLink = document.getElementById('cardLink').value;
+
+            const fileInput = document.getElementById('cardImage');
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    card.querySelector('img').src = e.target.result;
+                }
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+
+            card.querySelector('.card-title').textContent = newTitle;
+            card.querySelector('.card-text').textContent = newDescription;
+            card.querySelector('.card-link').href = newLink;
+
+            $('#editCardModal').modal('hide');
+        }
+
+        function deleteCard(card) {
+            card.remove();
+            $('#editCardModal').modal('hide');
+        }
+    </script>
+</body>
+</html>

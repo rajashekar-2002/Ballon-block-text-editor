@@ -384,7 +384,9 @@ code {
     min-height: 40px;
     height: 100%;
     font-family: monospace;
-    white-space: pre-wrap;
+    white-space: pre;
+    max-width: 100%;
+    overflow-x: auto;
 }
 
 
@@ -1460,3 +1462,59 @@ button{
             cursor: pointer;
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#affiliateCardsContainer{
+display:flex;
+flex-direction: row !important;
+align-items: center;
+justify-content: center;
+margin:0;
+}
+
+.affiliate-card{
+    /* width: 500px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    max-width: 286px;
+}
+
+
+.affiliate-card img{
+    height: 180px;
+    width: 286px;
+}
+
+.card-text{
+    margin: 0px;
+    width:100%;
+    font-size: smaller;
+}
+
+
+
+.card-title{
+    font-size: smaller;
+    margin: 0px;
+    width: 100%;
+}

@@ -122,16 +122,30 @@ document.getElementById('replaceButton').addEventListener('click', function() {
         const paragraph = container.querySelector('p.para-container-paragraph');
 
         if (paragraph) {
-            const newText = paragraph.innerHTML.replace(regex, replaceTerm); // Replace text
-
-            // Update the paragraph's innerHTML with the replaced text
-            paragraph.innerHTML = newText;
+            replaceTextInNode(paragraph, regex, replaceTerm);
         }
     });
 
     // After replacing, re-highlight the new text
     highlightSearchTerm();
 });
+
+
+function replaceTextInNode(node, regex, replaceTerm) {
+    node.childNodes.forEach(child => {
+        if (child.nodeType === Node.TEXT_NODE) {
+            // If it's a text node, perform the replacement
+            const newText = child.textContent.replace(regex, replaceTerm);
+            child.textContent = newText;
+        } else if (child.nodeType === Node.ELEMENT_NODE && child.getAttribute('contenteditable') !== 'false') {
+            // If it's an element node and is editable, recurse
+            replaceTextInNode(child, regex, replaceTerm);
+        }
+        // If it's an element node and is not editable, do nothing
+    });
+}
+
+
 
 // Helper function to escape HTML special characters
 function escapeHTML(text) {

@@ -95,7 +95,9 @@ document.addEventListener('DOMContentLoaded', function() {
 let draggedItem = null;
 // Function to create a new paragraph with drag, add, and delete features
 export function addParagraph(afterElement = null, focus=false, classname= null) {
+    // const pre = document.createElement('pre');
     const paraContainer = document.createElement('div');
+    // pre.appendChild(paraContainer);
     paraContainer.className = 'para-container';
     paraContainer.draggable = true;
     paraContainer.addEventListener('dragstart', onDragStart);
@@ -211,7 +213,9 @@ export function addParagraph(afterElement = null, focus=false, classname= null) 
         deleteParagraph(paraContainer);
     });
 
+    // const pre = document.createElement('pre');
     const p = document.createElement('p');
+    // pre.appendChild(p);
     p.contentEditable = true;
     p.classList.add( 'para-container-paragraph');
     p.innerHTML = '<br>';
@@ -316,6 +320,7 @@ export function handlePasteAsPlainText(event) {
     // range.setEndAfter(fragment);
     selection.removeAllRanges();
     selection.addRange(range);
+    
 }
 
 // export function handlePasteAsPlainText(event) {

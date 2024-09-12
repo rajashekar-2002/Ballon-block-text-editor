@@ -46,7 +46,7 @@ export function showToolbox(x, y, paraContainer) {
 
     // Check if the button already exists
     let button = document.getElementById('para-toolbox-options');
-    if (!button) {
+    if (!button && paragraphText!="") {
         // Create and position the button if it doesn't exist
         button = document.createElement('button');
         button.innerHTML = '<i class="fa fa-ellipsis-v" aria-hidden="true"></i>';
@@ -102,6 +102,7 @@ export function showToolbox(x, y, paraContainer) {
             startHideTimeout();
 
         } else {
+
             hideToolbox(); // Hide the toolbox if the paragraph is empty
 
         }

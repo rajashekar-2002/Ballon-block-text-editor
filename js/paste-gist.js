@@ -1,5 +1,6 @@
 // //paste-gist.js
-
+import { addParagraph } from "./addParagraph.js";
+import { setActiveParagraph } from "./para-toolbox.js";
 
 // document.addEventListener('DOMContentLoaded', () => {
 //     const editor = document.getElementById('editor');
@@ -144,10 +145,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const clipboardData = event.clipboardData || window.clipboardData;
         const pastedData = clipboardData.getData('text');
 
+        const container = event.target.closest('div.para-container');
+        const newParagraph = addParagraph(container).querySelector('p');
+        newParagraph.innerHTML = ''; // Clear any previous content
+        // const p = event.target.closest('p.para-container-paragraph');
+        setActiveParagraph(newParagraph);
         if (isGistUrl(pastedData)) {
             event.preventDefault(); // Prevent the default paste action
 
-            const activeParagraph = document.querySelector('.activeParagraph');
+            const activeParagraph = newParagraph;
 
             if (activeParagraph) {
                 showLoadingSpinner(activeParagraph); // Show the loading spinner
@@ -157,15 +163,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 const gistContent = await fetchGistContent(pastedData);
                 
                 if (activeParagraph) {
-                    activeParagraph.innerHTML = ''; // Clear the paragraph content
+                   const loaderDiv = activeParagraph.querySelector('.gist-loader-div');
+                   if (loaderDiv) {
+                    loaderDiv.remove();
+                    }
+                    // activeParagraph.closest("div.para-container").remove();
                 }
 
-                insertCodeBlock(gistContent, pastedData);
+                insertCodeBlock(activeParagraph,gistContent, pastedData);
             } catch (error) {
                 console.error('Failed to fetch Gist content:', error);
                 
                 if (activeParagraph) {
-                    activeParagraph.innerHTML = ''; // Clear the paragraph content
+                    //activeParagraph.innerHTML = ''; // Clear the paragraph content
                 }
 
                 insertPlainText(pastedData); // Insert URL as plain text
@@ -197,7 +207,8 @@ export async function fetchGistContent(url) {
     return fileContent;
 }
 
-export function insertCodeBlock(content, url) {
+export function insertCodeBlock(p,content, url) {
+    console.log("sdddddddd",p);
     const codeElement = document.createElement('pre');
     const codeText = document.createElement('code');
     codeText.textContent = content;
@@ -236,9 +247,10 @@ export function insertCodeBlock(content, url) {
     if (selection.rangeCount > 0) {
         const range = selection.getRangeAt(0);
         range.deleteContents(); // Clear any selected content
-        range.insertNode(containerDiv); // Insert the container with div and code block
+        //range.insertNode(containerDiv); // Insert the container with div and code block
+        p.appendChild(containerDiv);
     } else {
-        editor.appendChild(containerDiv); // If no selection, just append the container
+        p.appendChild(containerDiv); // If no selection, just append the container
     }
 }
 
@@ -259,6 +271,7 @@ export function insertPlainText(text) {
 function showLoadingSpinner(paragraph) {
     // Create a div to center the spinner button
     const spinnerContainer = document.createElement('div');
+    spinnerContainer.className = 'gist-loader-div';
     spinnerContainer.style.display = 'flex';
     spinnerContainer.style.justifyContent = 'center';
     spinnerContainer.style.alignItems = 'center';
@@ -274,6 +287,6 @@ function showLoadingSpinner(paragraph) {
     `;
 
     spinnerContainer.appendChild(spinnerButton); // Append the spinner button to the container
-    paragraph.innerHTML = ''; // Clear the paragraph content
+    //paragraph.innerHTML = ''; // Clear the paragraph content
     paragraph.appendChild(spinnerContainer); // Append the centered container to the paragraph
 }

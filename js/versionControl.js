@@ -10,6 +10,7 @@ import { buildStructure, validateStructure } from "./section.js";
 import { hideTableToolbox, unselectAllCells } from "./table.js";
 import { printParagraphDetails } from "./TextSelection.js";
 
+
 function attachEventListeners() {
 
 

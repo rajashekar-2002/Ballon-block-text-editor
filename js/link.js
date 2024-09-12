@@ -94,7 +94,7 @@ let linkTimeout;
 document.addEventListener('DOMContentLoaded', () => {
     const showLinkOptionsButton = document.getElementById('showLinkOptionsButton');
     const linkActionSelect = document.getElementById('link-actionselect');
-
+    let activeParagraph = getActiveParagraph();
     // Function to toggle the visibility of the dropdown menu
     const toggleLinkOptions = () => {
         linkActionSelect.style.display = linkActionSelect.style.display === 'none' ? 'block' : 'none';
@@ -126,8 +126,45 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('openModal').click();
         } else if (selectedOption === 'embedLink') {
             document.getElementById('embed-link-button').click();
-        }
-
+        }// else if (selectedOption === 'affilitateLink') {
+        //     // Create a new paragraph using your function
+        //     const p = addParagraph(activeParagraph.parentElement, false, "affiliateLinkParagraph").querySelector('p');
+        //     setActiveParagraph(p);
+    
+        //     // Find the container for the cards
+        //     let cardsContainer = document.getElementById('affiliateCardsContainer');
+        //     if (!cardsContainer) {
+        //         cardsContainer = document.createElement('div');
+        //         cardsContainer.id = 'affiliateCardsContainer';
+        //         cardsContainer.className = 'card-deck'; // Bootstrap class for card decks
+        //         p.appendChild(cardsContainer);
+        //     }
+    
+        //     // Check how many affiliate cards already exist
+        //     const existingCards = document.querySelectorAll('.affiliate-card');
+        //     const maxCards = 3;
+    
+        //     if (existingCards.length >= maxCards) {
+        //         //alert('Maximum of 3 affiliate cards allowed.');
+        //         return;
+        //     }
+    
+        //     // Calculate how many more cards can be added
+        //     const cardsToCreate = Math.min(maxCards - existingCards.length, 3);
+    
+        //     // Add the necessary number of cards
+        //     for (let i = 0; i < cardsToCreate; i++) {
+        //         createAffiliateCard(cardsContainer, `https://via.placeholder.com/286x180?text=Card+${existingCards.length + i + 1}`, 
+        //         `Affiliate Card ${existingCards.length + i + 1}`, 
+        //         `This is an affiliate card ${existingCards.length + i + 1} description.`, 
+        //         `https://affiliate-link-${existingCards.length + i + 1}.com`);
+        //     }
+    
+        //     // Insert the modal HTML
+        //     insertAffiliateModalHTML();
+        //     removeBRsInPara(p);
+        // }
+  
         // Reset and hide the select element
         linkActionSelect.value = '';
         linkActionSelect.style.display = 'none';
@@ -148,6 +185,135 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+
+
+// function createAffiliateCard(container, imageSrc, title, description, link) {
+//     const card = document.createElement('div');
+//     card.className = 'card affiliate-card';
+//     card.style.width = '18rem';
+//     card.style.position = 'relative'; // Required to position the edit button
+
+//     card.innerHTML = `
+//         <img src="${imageSrc}" class="card-img-top" alt="Card image cap">
+//         <div class="card-body">
+//             <h5 class="card-title">${title}</h5>
+//             <p class="card-text">${description}</p>
+//             <a href="${link}" class="btn btn-primary" target="_blank">Go to link</a>
+//         </div>
+//         <button class="affiliate-edit-btn btn btn-secondary" style="position: absolute; top: 5px; right: 5px;"><i class="fas fa-edit"></i></button>
+//     `;
+
+//     card.querySelector('.affiliate-edit-btn').addEventListener('click', function () {
+//         openAffiliateEditModal(card);
+//     });
+
+//     container.appendChild(card);
+// }
+
+// function insertAffiliateModalHTML() {
+//     if (!document.getElementById('affiliateEditCardModal')) {
+//         const modalHTML = `
+//         <div class="modal fade" id="affiliateEditCardModal" tabindex="-1" role="dialog" aria-labelledby="affiliateEditCardModalLabel" aria-hidden="true">
+//             <div class="modal-dialog" role="document">
+//                 <div class="modal-content">
+//                     <div class="modal-header">
+//                         <h5 class="modal-title" id="affiliateEditCardModalLabel">Edit Affiliate Card</h5>
+//                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+//                             <span aria-hidden="true">&times;</span>
+//                         </button>
+//                     </div>
+//                     <div class="modal-body">
+//                         <form id="affiliateEditCardForm">
+//                             <div class="form-group">
+//                                 <label for="affiliateCardImage">Card Image</label>
+//                                 <input type="file" class="form-control-file" id="affiliateCardImage">
+//                             </div>
+//                             <div class="form-group">
+//                                 <label for="affiliateCardTitle">Card Title</label>
+//                                 <input type="text" class="form-control" id="affiliateCardTitle">
+//                             </div>
+//                             <div class="form-group">
+//                                 <label for="affiliateCardDescription">Card Description</label>
+//                                 <textarea class="form-control" id="affiliateCardDescription"></textarea>
+//                             </div>
+//                             <div class="form-group">
+//                                 <label for="affiliateCardLink">Card Link</label>
+//                                 <input type="text" class="form-control" id="affiliateCardLink">
+//                             </div>
+//                             <button type="button" class="btn btn-danger" id="deleteAffiliateCard">Delete Card</button>
+//                         </form>
+//                     </div>
+//                     <div class="modal-footer">
+//                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+//                         <button type="button" class="btn btn-primary" id="saveAffiliateChanges">Save changes</button>
+//                     </div>
+//                 </div>
+//             </div>
+//         </div>`;
+        
+//         document.body.insertAdjacentHTML('beforeend', modalHTML);
+//     }
+// }
+
+// function openAffiliateEditModal(card) {
+//     const currentCard = card;
+
+//     document.getElementById('affiliateCardTitle').value = currentCard.querySelector('.card-title').innerText;
+//     document.getElementById('affiliateCardDescription').value = currentCard.querySelector('.card-text').innerText;
+//     document.getElementById('affiliateCardLink').value = currentCard.querySelector('.btn-primary').href;
+
+//     $('#affiliateEditCardModal').modal('show');
+
+//     document.getElementById('saveAffiliateChanges').onclick = function () {
+//         saveAffiliateCardChanges(currentCard);
+//     };
+
+//     document.getElementById('deleteAffiliateCard').onclick = function () {
+//         deleteAffiliateCard(currentCard);
+//     };
+
+//     document.getElementById('affiliateCardImage').onchange = function (event) {
+//         const reader = new FileReader();
+//         reader.onload = function (e) {
+//             currentCard.querySelector('.card-img-top').src = e.target.result;
+//         };
+//         reader.readAsDataURL(event.target.files[0]);
+//     };
+// }
+
+// function saveAffiliateCardChanges(card) {
+//     const title = document.getElementById('affiliateCardTitle').value;
+//     const description = document.getElementById('affiliateCardDescription').value;
+//     const link = document.getElementById('affiliateCardLink').value;
+
+//     card.querySelector('.card-title').innerText = title;
+//     card.querySelector('.card-text').innerText = description;
+//     card.querySelector('.btn-primary').href = link;
+
+//     $('#affiliateEditCardModal').modal('hide');
+// }
+
+// function deleteAffiliateCard(card) {
+//     card.remove();
+//     $('#affiliateEditCardModal').modal('hide');
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Embed and link button function
 document.getElementById('embed-link-button').addEventListener('click', async function(event) {
